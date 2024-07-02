@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_mysqldb import MySQL
 #from config import Config 
+from flask_cors import CORS
 
 # Initialize the Flask application
 app = Flask(__name__)
+CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'

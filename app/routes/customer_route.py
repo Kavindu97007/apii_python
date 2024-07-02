@@ -17,10 +17,25 @@ def add_data():
 
 # Route to get all customers
 @customer_bp.route('/data', methods=['GET'])
+# def get_data():
+#     cur = mysql.connection.cursor()
+#     cur.execute('''SELECT * FROM customer''')
+#     data = cur.fetchall()
+#     print(data)
+#     cur.close()
+#     return jsonify(data)
+
 def get_data():
     cur = mysql.connection.cursor()
     cur.execute('''SELECT * FROM customer''')
-    data = cur.fetchall()
+    rows = cur.fetchall()
+    
+    # Get column names from cursor description
+    column_names = [desc[0] for desc in cur.description]
+    
+    # Convert rows into a list of dictionaries
+    data = [dict(zip(column_names, row)) for row in rows]
+    
     cur.close()
     return jsonify(data)
 
